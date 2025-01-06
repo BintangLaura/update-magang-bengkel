@@ -132,7 +132,7 @@
                             <button type="submit" class="btn btn-custom mt-2">Masuk</button>
                         </form>
                         <div class="register-link">
-                            Tidak punya akun? <a href="register.html">Registrasi di sini</a>
+                            Tidak punya akun? <a href="{{route ('register')}}">Registrasi di sini</a>
                         </div>
                     </div>
                 </div>
@@ -154,4 +154,3 @@
     </body>
 
 </html>
-

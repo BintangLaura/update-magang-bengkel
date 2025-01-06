@@ -3,18 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 use App\Models\Product;
 use App\Models\Cart;
+use Illuminate\Support\Facades\Auth;
 
-class PelangganController extends Controller
+class CartController extends Controller
 {
-    public function index() {
-        $products = Product::all();
-        return view ('pelanggan.pelanggan', ['products' => $products]);
-    }
-
     public function tambahBarang(Product $product) {
         $cart = Cart::where('users_id', Auth::id())
                 ->where('products_id', $products_id)
@@ -30,7 +24,8 @@ class PelangganController extends Controller
                 'jumlah' => 1,
             ]);
         }
-        return redirect('/dashboard/pelanggan')->with('success', 'Barang Berhasil ditambahkan ke Keranjang');
+
+        return redirect()->back()->with('success', 'Barang Berhasil ditambahkan ke Keranjang');
     }
 
     public function lihatKeranjang() {

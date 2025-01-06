@@ -80,10 +80,10 @@
                     <div class="collapse navbar-collapse" id="navbarCollapse">
                         <div class="navbar-nav mx-auto py-0">
                             <a href="index.html" class="nav-item nav-link active">Home</a>
-                            <a href="#" class="nav-item nav-link">Service</a>
-                            <a href="#" class="nav-item nav-link">Product</a>
-                            <a href="#" class="nav-item nav-link">News</a>
-                            <a id="cartBtn" href="#" class="nav-item nav-link">Trolley</a>
+                            <a id="service" href="#" class="nav-item nav-link">Service</a>
+                            <a id="product" href="#" class="nav-item nav-link">Product</a>
+                            <a id="news" href="#" class="nav-item nav-link">News</a>
+                            <a href="#" class="nav-item nav-link">Trolley</a>
                         </div>
                         <a href="{{ route('login')}}" class="btn btn-primary rounded-pill py-2 px-4"><i class="fa fa-user">  Login</i></a>
                     </div>
@@ -123,7 +123,7 @@
         <div class="container-fluid service py-5">
             <div class="container py-5">
                 <div class="text-center mx-auto pb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 800px;">
-                    <h1 class="display-5 text-capitalize mb-3">Our <span class="text-primary">Services</span></h1>
+                    <h1 id="service" class="display-5 text-capitalize mb-3">Our <span class="text-primary">Services</span></h1>
                     <p class="mb-0">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut amet nemo expedita asperiores commodi accusantium at cum harum, excepturi, quia tempora cupiditate! Adipisci facilis modi quisquam quia distinctio,
                     </p>
                 </div>

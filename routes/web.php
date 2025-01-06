@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\MitraController;
 use App\Http\Controllers\PelangganController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\CartController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -41,7 +42,12 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('/product/update', [ProductController::class, 'update']);
     Route::get('/product/hapus/{id}', [ProductController::class, 'hapus']);
     Route::get('/product/edit/{id}', [ProductController::class, 'edit']);
-
+    Route::get('/keranjang', [PelangganController::class, 'lihatKeranjang']);
+    Route::post('/keranjang/{product}', [PelangganController::class, 'tambahKeranjang'])->name('tambahKeranjang');
+    Route::delete('/keranjang/{cart}', [PelangganController::class, 'hapusKeranjang']);
+    Route::get('/checkout-barang', [CheckoutController::class, 'index']);
+    Route::get('/checkout-jasa', [CheckoutController::class, 'jasa']);
+    Route::get('/bayar', [CheckoutController::class, 'bayar']);
 });
 
 // Route::middleware('auth')->group(function () {

@@ -80,12 +80,30 @@
                     <div class="collapse navbar-collapse" id="navbarCollapse">
                         <div class="navbar-nav mx-auto py-0">
                             <a href="index.html" class="nav-item nav-link active">Home</a>
-                            <a href="#" class="nav-item nav-link">Service</a>
+                            <a id="#service" class="nav-item nav-link">Service</a>
                             <a href="#" class="nav-item nav-link">Product</a>
                             <a href="#" class="nav-item nav-link">News</a>
-                            <a id="cartBtn" href="#" class="nav-item nav-link">Trolley</a>
+                            <a href="/keranjang" class="nav-item nav-link">Trolley</a>
                         </div>
-                        <a href="{{ route('login')}}" class="btn btn-primary rounded-pill py-2 px-4"><i class="fa fa-user"> {{Auth::user()->nama}}</i></a>
+                         <div class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle btn btn-primary rounded-pill py-2 px-4" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                          {{Auth::user()->nama}}
+                        </a>
+                        <ul class="dropdown-menu">
+                          <li><hr class="dropdown-divider"></li>
+                          <li class="dropdown-item">
+                            <form method="POST" action="{{ route('logout') }}">
+                                @csrf
+
+                                <x-dropdown-link :href="route('logout')"
+                                        onclick="event.preventDefault();
+                                                    this.closest('form').submit();">
+                                    {{ __('Log Out') }}
+                                </x-dropdown-link>
+                            </form>
+                         </li>
+                        </ul>
+                    </div>
                     </div>
                 </nav>
             </div>
@@ -123,7 +141,7 @@
         <div class="container-fluid service py-5">
             <div class="container py-5">
                 <div class="text-center mx-auto pb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 800px;">
-                    <h1 class="display-5 text-capitalize mb-3">Our <span class="text-primary">Services</span></h1>
+                    <h1 id="#service" class="display-5 text-capitalize mb-3">Our <span class="text-primary">Services</span></h1>
                     <p class="mb-0">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut amet nemo expedita asperiores commodi accusantium at cum harum, excepturi, quia tempora cupiditate! Adipisci facilis modi quisquam quia distinctio,
                     </p>
                 </div>
@@ -135,7 +153,7 @@
                             </div>
                             <h5 class="mb-3">Ganti Oli Mesin</h5>
                             <p class="mb-0">Lorem ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit ipsam quasi quibusdam ipsa perferendis iusto?</p><hr>
-                            <a href="pesan-jasa-oli.html" class="btn btn-primary rounded-pill py-2 px-4">Pesan</a>
+                            <a href="/checkout-jasa" class="btn btn-primary rounded-pill py-2 px-4">Pesan</a>
                         </div>
                     </div>
                     <div class="col-md-6 col-lg-4 wow fadeInUp" data-wow-delay="0.3s">
@@ -145,7 +163,7 @@
                             </div>
                             <h5 class="mb-3">Tambah Angin + Derek</h5>
                             <p class="mb-0">Lorem ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit ipsam quasi quibusdam ipsa perferendis iusto?</p><hr>
-                            <a href="pesan-derek.html" class="btn btn-primary rounded-pill py-2 px-4">Pesan</a>
+                            <a href="/checkout-jasa" class="btn btn-primary rounded-pill py-2 px-4">Pesan</a>
                         </div>
                     </div>
                     <div class="col-md-6 col-lg-4 wow fadeInUp" data-wow-delay="0.5s">
@@ -155,7 +173,7 @@
                             </div>
                             <h5 class="mb-3">Tambal Ban</h5>
                             <p class="mb-0">Lorem ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit ipsam quasi quibusdam ipsa perferendis iusto?</p><hr>
-                            <a href="pesan-jasa.html" class="btn btn-primary rounded-pill py-2 px-4">Pesan</a>
+                            <a href="/checkout-jasa" class="btn btn-primary rounded-pill py-2 px-4">Pesan</a>
                         </div>
                     </div>
                 </div>
@@ -171,78 +189,40 @@
                     <p class="mb-0">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut amet nemo expedita asperiores commodi accusantium at cum harum, excepturi, quia tempora cupiditate! Adipisci facilis modi quisquam quia distinctio,
                     </p>
                 </div>
-                <div class="categories-carousel owl-carousel wow fadeInUp" data-wow-delay="0.1s">
-                    <div class="categories-item p-4">
-                        <div class="categories-item-inner">
-                            <div class="categories-img rounded-top p-5">
-                                <img src="{{asset('assets-bengkel/img/curology-j7pKVQrTUsM-unsplash 1.png')}}" class="img-fluid w-60 mx-auto rounded-top" alt="">
-                            </div>
-                            <div class="categories-content rounded-bottom p-4">
-                                <h4>Curology Product Set</h4>
-                                <div class="mb-4">
-                                    <h4 class="bg-white text-primary rounded-pill py-2 px-4 mb-0">$99</h4>
+                <div class="container-fluid service py-5">
+                    <div class="container py-5">
+                        <div class="row g-4">
+                            @foreach ($products as $product)
+                            <div class="col-md-6 col-lg-4 mb-4 wow fadeInUp" data-wow-delay="0.1s">
+                                <div class="service-item p-4">
+                                    <img src="{{ url('/data_img/').'/'.$product->image }}" class="mx-auto" alt="Oli" width="50%">
+                                    <br>
+                                    <h5 class="mb-3">{{$product->product_name}}</h5>
+                                    <p class="mb-0 pb-0">{{$product->description}}</p>
+                                    <table>
+                                        <tr>
+                                            <td>Harga Produk</td>
+                                            <td>:</td>
+                                            <td>{{$product->harga}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Stok Produk</td>
+                                            <td>:</td>
+                                            <td>{{$product->stock}}</td>
+                                        </tr>
+                                    </table>
+                                    <br>
+                                    <div class="row">
+                                        <div class="col">
+                                            <form action="{{route('tambahKeranjang', ['product' => $product->id])}}" method="post">
+                                                <button type="submit" class="btn btn-warning rounded-pill py-2 px-4">Add To Cart</button>
+                                                <a href="/checkout-barang" class="btn btn-danger rounded-pill py-2 px-4">Beli</a>
+                                            </form>
+                                        </div>
+                                    </div>
                                 </div>
-                                <a href="#" class="btn btn-primary rounded-pill d-flex justify-content-center py-3">Pesan</a>
                             </div>
-                        </div>
-                    </div>
-                    <div class="categories-item p-4">
-                        <div class="categories-item-inner">
-                            <div class="categories-img rounded-top p-5">
-                                <img src="{{asset('assets-bengkel/img/curology-j7pKVQrTUsM-unsplash 1.png')}}" class="img-fluid w-60 mx-auto rounded-top" alt="">
-                            </div>
-                            <div class="categories-content rounded-bottom p-4">
-                                <h4>Curology Product Set</h4>
-                                <div class="categories-review mb-4">
-
-                                </div>
-                                <div class="mb-4">
-                                    <h4 class="bg-white text-primary rounded-pill py-2 px-4 mb-0">$99</h4>
-                                </div>
-                                <a href="#" class="btn btn-primary rounded-pill d-flex justify-content-center py-3">Pesan</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="categories-item p-4">
-                        <div class="categories-item-inner">
-                            <div class="categories-img rounded-top p-5">
-                                <img src="{{asset('assets-bengkel/img/curology-j7pKVQrTUsM-unsplash 1.png')}}" class="img-fluid w-60 mx-auto rounded-top" alt="">
-                            </div>
-                            <div class="categories-content rounded-bottom p-4">
-                                <h4>Curology Product Set</h4>
-                                <div class="mb-4">
-                                    <h4 class="bg-white text-primary rounded-pill py-2 px-4 mb-0">$99</h4>
-                                </div>
-                                <a href="#" class="btn btn-primary rounded-pill d-flex justify-content-center py-3">Pesan</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="categories-item p-4">
-                        <div class="categories-item-inner">
-                            <div class="categories-img rounded-top p-5">
-                                <img src="{{asset('assets-bengkel/img/curology-j7pKVQrTUsM-unsplash 1.png')}}" class="img-fluid w-60 mx-auto rounded-top" alt="">
-                            </div>
-                            <div class="categories-content rounded-bottom p-4">
-                                <h4>Curology Product Set</h4>
-                                <div class="mb-4">
-                                    <h4 class="bg-white text-primary rounded-pill py-2 px-4 mb-0">$99</h4>
-                                </div>
-                                <a href="#" class="btn btn-primary rounded-pill d-flex justify-content-center py-3">Pesan</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="categories-item p-4">
-                        <div class="categories-item-inner">
-                            <div class="categories-img rounded-top p-5">
-                                <img src="{{asset('assets-bengkel/img/curology-j7pKVQrTUsM-unsplash 1.png')}}" class="img-fluid w-60 mx-auto rounded-top" alt="">
-                            </div>
-                            <div class="categories-content rounded-bottom p-4">
-                                <h4>Curology Product Set</h4>
-                                <div class="mb-4">
-                                    <h4 class="bg-white text-primary rounded-pill py-2 px-4 mb-0">$99</h4>
-                                </div>
-                                <a href="#" class="btn btn-primary rounded-pill d-flex justify-content-center py-3">Pesan</a>
-                            </div>
+                            @endforeach
                         </div>
                     </div>
                 </div>
@@ -525,43 +505,6 @@
 
         <!-- Back to Top -->
         <a href="#" class="btn btn-secondary btn-sm-rounded-circle back-to-top"><i class="fa fa-arrow-up"></i></a>
-
-
-        <div id="orderSidebar" class="offcanvas offcanvas-end bg-light shadow-lg" tabindex="-1" style="width: 400px;">
-            <div class="offcanvas-header">
-                <h5 class="offcanvas-title">List Pesanan</h5>
-                <button type="button" class="btn-close" id="closeSidebar"></button>
-            </div>
-            <div class="offcanvas-body">
-                <div class="order-item d-flex align-items-center mb-3">
-                    <img src="{{asset('assets-bengkel/img/oil.png')}}" alt="Oil Motor" class="img-fluid me-3" style="width: 50px;">
-                    <div>
-                        <p class="mb-1">Oli Motor Motul 300h</p>
-                        <p class="mb-1 text-muted">Rp 220.000</p>
-                    </div>
-                    <div class="ms-auto d-flex align-items-center">
-                        <button class="btn btn-outline-secondary btn-sm me-2">-</button>
-                        <input type="text" class="form-control text-center" value="1" style="width: 40px;">
-                        <button class="btn btn-outline-secondary btn-sm ms-2">+</button>
-                    </div>
-                </div>
-            </div>
-            <div class="offcanvas-footer p-3">
-                <a href="checkout-barang.html" class="btn btn-primary w-100">Pesan Sekarang</a>
-            </div>
-        </div>
-
-        <script>
-            document.getElementById('cartBtn').addEventListener('click', function() {
-                var sidebar = new bootstrap.Offcanvas(document.getElementById('orderSidebar'));
-                sidebar.show();
-            });
-
-            document.getElementById('closeSidebar').addEventListener('click', function() {
-                var sidebar = bootstrap.Offcanvas.getInstance(document.getElementById('orderSidebar'));
-                sidebar.hide();
-            });
-        </script>
     <!-- JavaScript Libraries -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
